@@ -1,4 +1,4 @@
-echo "# SecureVote
+ SecureVote
 
 SecureVote is a simple online voting system built with Flask and SQLite.
 
