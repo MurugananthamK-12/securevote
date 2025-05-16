@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom mb-4">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('home') }}">SecureVote</a>
+      <div>
+        {% if current_user.is_authenticated %}
+          <span class="me-3">Hello, {{ current_user.username }}!</span>
+          <a href="{{ url_for('logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+          {% if current_user.username == 'admin' %}
+            <a href="{{ url_for('admin') }}" class="btn btn-outline-primary btn-sm ms-2">Admin Panel</a>
+          {% endif %}
+        {% else %}
+          <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-sm">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SecureVote - Vote</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h2 class="mb-4 text-center">Cast Your Vote</h2>
+        <div class="text-center mb-4">
+            <a href="{{ url_for('result') }}" class="btn btn-outline-primary">See Results</a>
+            <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">Home</a>
+        </div>
+        <div class="row justify-content-center">
+            {% for candidate in candidates %}
+            <div class="col-md-4 mb-3">
+                <form action="{{ url_for('cast_vote', candidate_id=candidate.id) }}" method="post">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ candidate.name }}</h5>
+                            <button type="submit" class="btn btn-success w-100">Vote</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
